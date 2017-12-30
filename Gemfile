@@ -30,6 +30,7 @@ end
 
 group :test do
   gem 'minitest-reporters'
+  gem 'ruby-prof'
 end
 
 group :development do
