@@ -42,6 +42,7 @@ Layout/EmptyLineAfterMagicComment:
 Layout/EmptyLines:
   Exclude:
     - 'bin/setup'
+    - 'db/**/**'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -108,6 +109,7 @@ Style/StringLiterals:
     - 'bin/yarn'
     - 'config/environments/production.rb'
     - 'test/application_system_test_case.rb'
+    - 'db/**/**'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -128,4 +130,10 @@ Style/SymbolArray:
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 112
+  Max: 200
+
+Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 100
