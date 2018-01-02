@@ -4,6 +4,12 @@ class Movie < ApplicationRecord
   has_many :ratings, dependent: :destroy
 
   def self.filtered(params)
-    where(title: params)
+    result = Movie.all
+
+    return result.where(title: params['filtered_text']) if params['filtered_text'].present?
+
+    return result.joins(:category).where('categories.name = ?', params['categoryFilter']) if params['categoryFilter'].present?
+
+    result
   end
 end

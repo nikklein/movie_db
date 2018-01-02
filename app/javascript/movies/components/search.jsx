@@ -7,16 +7,15 @@ export default class Search extends React.Component {
   }
 
   handleChange(e) {
-    this.props.onInputChange(e.target.value)
+    event.preventDefault(e)
+    this.props.onInputChange({filtered_text: e.target.value})
   }
 
   render() {
     return (
-      <div className="row">
-        <div className="input-field">
-          <label>Search</label>
-          <input type="text" onKeyUp={this.handleChange}/>
-        </div>
+      <div>
+        <label>Search</label>
+        <input type="text" onKeyUp={this.handleChange}/>
       </div>
     )
   }

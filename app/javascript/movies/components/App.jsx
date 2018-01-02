@@ -2,6 +2,7 @@
 import React from 'react'
 import Search from './search'
 import Movies from './movies'
+import CategoryFilters from './categoryFilters'
 import axios from 'axios'
 
 export default class App extends React.Component {
@@ -10,23 +11,23 @@ export default class App extends React.Component {
     this.onInputChange = this.onInputChange.bind(this)
     this.findMovies = this.findMovies.bind(this)
     this.state = {
-      filterText: '',
       movie_list: [],
+      categories: [],
     };
   }
 
-  findMovies(params) {
+  findMovies(params = {}) {
     axios.get('/movies' + '.json', {
-      params: { filtered_text: params },
+      params: {filtered_text: params.filtered_text, categories: params.categories, categoryFilter: params.filterByCategory},
       headers: {
           'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
         }
     })
     .then( (response) => {
-      this.setState({movie_list: response.data});
+      this.setState({movie_list: response.data.movies, categories: response.data.categories});
     })
     .catch((error) => {
-      console.log(error);
+      // implement!
     });
   }
 
@@ -35,14 +36,15 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.findMovies()
+    this.findMovies(this.state)
   }
 
   render() {
     return (
       <div>
-        <Search filterText={this.state.filterText} onInputChange={this.onInputChange}/>
-        <Movies signed_in={this.props.signed_in} movie_list={this.state.movie_list}/>
+        <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
+        <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
+        <Movies signed_in={this.props.signed_in} movie_list={this.state.movie_list} />
       </div>
     )
   }

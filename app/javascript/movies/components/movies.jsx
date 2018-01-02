@@ -10,14 +10,15 @@ export default class Movies extends React.Component {
   render() {
     const rows = []
 
-    this.props.movie_list.forEach((movie) => {
+    this.props.movie_list.forEach(movie => {
       rows.push(<Movie
         key={movie.id}
         signed_in={this.props.signed_in}
         title={movie.title}
         text={movie.text}
-        category={movie.category.name}
-        mean_rating={movie.mean_rating} />)
+        category={movie.category_name}
+        mean_rating={movie.mean_rating} />
+      )
     })
 
     return (
