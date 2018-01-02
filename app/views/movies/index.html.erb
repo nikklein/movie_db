@@ -1,0 +1,12 @@
+<div class="row">
+  <h1>MOVIES</h1>
+
+
+<div id="movies"></div>
+
+<%= content_tag :div,
+ id: "signed_in",
+ data: user_signed_in? do %>
+<% end %>
+
+<%= javascript_pack_tag 'movies' %>
