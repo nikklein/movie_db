@@ -8,7 +8,7 @@ export default class CategoryFilter extends React.Component {
   render() {
     return (
       <div>
-        <li><a href="#" id={this.props.category_name} onClick={this.props.handleClick}>{this.props.category_name}</a></li>
+        <li><a href="#" id={this.props.category_name} onClick={this.props.handleClick}>{this.props.category_name} ({this.props.category_count})</a></li>
       </div>
     )
   }

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Search from './search'
 import Movies from './movies'
@@ -12,23 +11,20 @@ export default class App extends React.Component {
     this.findMovies = this.findMovies.bind(this)
     this.state = {
       movie_list: [],
-      categories: [],
-    };
+      categories: []
+    }
   }
 
   findMovies(params = {}) {
     axios.get('/movies' + '.json', {
       params: {filtered_text: params.filtered_text, categories: params.categories, categoryFilter: params.filterByCategory},
-      headers: {
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
-        }
     })
     .then( (response) => {
       this.setState({movie_list: response.data.movies, categories: response.data.categories});
     })
     .catch((error) => {
       // implement!
-    });
+    })
   }
 
   onInputChange(input_text) {

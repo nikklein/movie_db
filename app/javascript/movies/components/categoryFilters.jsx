@@ -8,7 +8,7 @@ export default class CategoryFilters extends React.Component {
   }
 
   handleClick(e) {
-    event.preventDefault(e);
+    event.preventDefault(e)
     this.props.onInputChange({filterByCategory: e.target.id})
   }
 
@@ -19,7 +19,7 @@ export default class CategoryFilters extends React.Component {
         <ul>
           <li>
             <a href="#" id="" onClick={this.handleClick}>All</a></li>
-            {this.props.categories.map(category => { return <CategoryFilter key={category.id} handleClick={this.handleClick} category_name={category.name}/> })}
+            {this.props.categories.map(category => { return <CategoryFilter key={category.id} handleClick={this.handleClick} category_name={category.name} category_count={category.category_count} /> })}
           </ul>
       </div>
     )

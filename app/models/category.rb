@@ -4,7 +4,7 @@ class Category < ApplicationRecord
 
   before_create :convert_to_title_case
 
-  def convert_to_tile_case
+  def convert_to_title_case
     self.name = name.downcase.capitalize
   end
 end

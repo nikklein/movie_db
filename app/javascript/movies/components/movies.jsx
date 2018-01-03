@@ -13,6 +13,7 @@ export default class Movies extends React.Component {
     this.props.movie_list.forEach(movie => {
       rows.push(<Movie
         key={movie.id}
+        movie_id={movie.id}
         signed_in={this.props.signed_in}
         title={movie.title}
         text={movie.text}
