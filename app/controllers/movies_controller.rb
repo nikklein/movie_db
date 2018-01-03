@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
   private
 
   def filter_params
-    params.permit('filtered_text', 'categoryFilter')
+    params.permit('filtered_text', 'categoryFilter', 'ratingFilter')
   end
 
   def movie_params; end

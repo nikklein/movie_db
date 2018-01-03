@@ -10,6 +10,8 @@ class Movie < ApplicationRecord
 
     return result.joins(:category).where('categories.name = ?', params['categoryFilter']) if params['categoryFilter'].present?
 
+    return result.where('mean_rating = ?', params['ratingFilter']) if params['ratingFilter'].present?
+
     result
   end
 end

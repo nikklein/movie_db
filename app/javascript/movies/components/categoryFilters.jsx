@@ -17,9 +17,8 @@ export default class CategoryFilters extends React.Component {
       <div>
         <p>Category Filter</p>
         <ul>
-          <li>
-            <a href="#" id="" onClick={this.handleClick}>All</a></li>
-            {this.props.categories.map(category => { return <CategoryFilter key={category.id} handleClick={this.handleClick} category_name={category.name} category_count={category.category_count} /> })}
+          <li><a href="#" id="" onClick={this.handleClick}>All</a></li>
+          {this.props.categories.map(category => { return <CategoryFilter key={category.id} handleClick={this.handleClick} category_name={category.name} category_count={category.category_count} /> })}
           </ul>
       </div>
     )

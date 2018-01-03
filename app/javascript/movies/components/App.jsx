@@ -2,6 +2,7 @@ import React from 'react'
 import Search from './search'
 import Movies from './movies'
 import CategoryFilters from './categoryFilters'
+import RatingFilters from './ratingFilters'
 import axios from 'axios'
 
 export default class App extends React.Component {
@@ -11,16 +12,17 @@ export default class App extends React.Component {
     this.findMovies = this.findMovies.bind(this)
     this.state = {
       movie_list: [],
-      categories: []
+      categories: [],
+      ratings: [],
     }
   }
 
   findMovies(params = {}) {
     axios.get('/movies' + '.json', {
-      params: {filtered_text: params.filtered_text, categories: params.categories, categoryFilter: params.filterByCategory},
+      params: {filtered_text: params.filtered_text, categories: params.categories, categoryFilter: params.filterByCategory, ratingFilter: params.ratingFilter},
     })
     .then( (response) => {
-      this.setState({movie_list: response.data.movies, categories: response.data.categories});
+      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings});
     })
     .catch((error) => {
       // implement!
@@ -39,6 +41,7 @@ export default class App extends React.Component {
     return (
       <div>
         <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
+        <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
         <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
         <Movies signed_in={this.props.signed_in} movie_list={this.state.movie_list} />
       </div>
