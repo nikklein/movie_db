@@ -3,12 +3,14 @@ import Search from './search'
 import Movies from './movies'
 import CategoryFilters from './categoryFilters'
 import RatingFilters from './ratingFilters'
+import Button from './button'
 import axios from 'axios'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.onInputChange = this.onInputChange.bind(this)
+    this.handleClick = this.onInputChange.bind(this)
     this.findMovies = this.findMovies.bind(this)
     this.state = {
       movie_list: [],
@@ -33,17 +35,24 @@ export default class App extends React.Component {
     this.findMovies(input_text)
   }
 
+  handleClick() {
+    alert('clicked')
+  }
+
   componentDidMount() {
-    this.findMovies(this.state)
+    this.findMovies()
   }
 
   render() {
+    const isSignedIn = this.props.signed_in
+
     return (
       <div>
+        {isSignedIn && <Button label='Add movie' isSignedIn={isSignedIn} categories={this.state.categories} />}
         <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
         <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
         <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
-        <Movies signed_in={this.props.signed_in} movie_list={this.state.movie_list} />
+        <Movies signed_in={this.props.signed_in} movie_list={this.state.movie_list} categories={this.state.categories} />
       </div>
     )
   }

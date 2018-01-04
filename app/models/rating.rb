@@ -3,6 +3,7 @@ class Rating < ApplicationRecord
   belongs_to :movie
 
   validates :movie, uniqueness: { scope: [:user, :score] }
+  validates :user, presence: true
 
   after_commit :update_movie_rating
 

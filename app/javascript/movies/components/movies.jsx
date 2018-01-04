@@ -18,7 +18,8 @@ export default class Movies extends React.Component {
         title={movie.title}
         text={movie.text}
         category={movie.category_name}
-        mean_rating={movie.mean_rating} />
+        mean_rating={movie.mean_rating}
+        categories={this.props.categories} />
       )
     })
 
@@ -31,6 +32,7 @@ export default class Movies extends React.Component {
               <td>Text</td>
               <td>Category</td>
               <td>Rating</td>
+              <td>Actions</td>
             </tr>
           </thead>
             <tbody>

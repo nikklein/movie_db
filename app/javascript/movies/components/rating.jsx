@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import styles from '../components/rating.scss'
-import axios from 'axios'
-
 
 export default class Rating extends React.Component {
   constructor(props) {
@@ -15,32 +13,14 @@ export default class Rating extends React.Component {
     this.rate = this.rate.bind(this)
     this.star_over = this.star_over.bind(this)
     this.star_out = this.star_out.bind(this)
-    this.update_rating = this.update_rating.bind(this)
   }
 
   static propTypes = {
     disabled: PropTypes.bool
   }
 
-  update_rating(rating) {
-    axios.post('/ratings' + '.json', {withCredentials: true}, {
-      data: {movie_id:this.props.movie_id, rating:rating},
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
-        }
-    })
-    .then( (response) => {
-      // show updated
-    })
-    .catch((error) => {
-      // implement!
-    });
-  }
-
   rate(e) {
-    this.update_rating(e.target.id)
+    this.props.handleUpdateRating(e.target.id)
     this.setState({
       rating: e.target.id,
       temp_rating: e.target.id

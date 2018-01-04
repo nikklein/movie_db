@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171231152918) do
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.text "text"
-    t.integer "mean_rating"
+    t.integer "mean_rating", default: 0
     t.integer "category_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
