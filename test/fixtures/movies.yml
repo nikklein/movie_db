@@ -1,13 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+star_wars:
+  title: Star Wars
+  text: Any Text
+  mean_rating: 5
+  category: action
+  user: user1
 
-one:
-  title: MyString
-  text: MyText
-  rating: 1
-  category: MyString
-
-two:
-  title: MyString
-  text: MyText
-  rating: 1
-  category: MyString
+godfather:
+  title: Godfather
+  text: Any Text
+  mean_rating: 4
+  category: drama
+  user: user1

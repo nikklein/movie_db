@@ -3,9 +3,10 @@ class Rating < ApplicationRecord
   belongs_to :movie
 
   validates :movie, uniqueness: { scope: [:user, :score] }
-  validates :user, presence: true
 
-  after_commit :update_movie_rating
+  after_update :update_movie_rating
+
+  private
 
   def update_movie_rating
     movie.update_column(:mean_rating, movie.ratings.sum(:score).to_f / movie.ratings.size.to_f)
