@@ -18,11 +18,12 @@ export default class App extends React.Component {
       ratings: [],
       page: 1,
       rows_per_page: this.props.rows,
+      totalEntries: null
     }
   }
 
  initialPageNumber(){
-  let total_rows = this.props.totalEntries
+  let total_rows = this.state.totalEntries
   let page = 1
   let rows = []
   for(var i = 0; i < total_rows; i += this.state.rows_per_page) {
@@ -44,7 +45,7 @@ export default class App extends React.Component {
       },
     })
     .then( (response) => {
-      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings});
+      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings, totalEntries: response.data.total_entries });
     })
     .catch((error) => {
       // implement!
