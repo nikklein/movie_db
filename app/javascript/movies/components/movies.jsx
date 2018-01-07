@@ -4,7 +4,7 @@ import Movie from '../components/movie'
 
 export default class Movies extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
@@ -13,6 +13,8 @@ export default class Movies extends React.Component {
     this.props.movie_list.forEach(movie => {
       rows.push(<Movie
         key={movie.id}
+        editable={movie.editable}
+        update={this.props.update}
         movie_id={movie.id}
         signed_in={this.props.signed_in}
         title={movie.title}
@@ -24,8 +26,8 @@ export default class Movies extends React.Component {
     })
 
     return (
-      <div>
-        <table>
+      <div className='col-sm-12'>
+        <table className='table table-condensed table-bordered table-hover'>
           <thead>
             <tr>
               <td>Title</td>

@@ -7,4 +7,9 @@
  data: user_signed_in? do %>
 <% end %>
 
+<%= content_tag :div,
+ id: "pages",
+ data: @movies.total_entries do %>
+<% end %>
+
 <%= javascript_pack_tag 'movies' %>

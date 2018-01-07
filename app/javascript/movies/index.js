@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom'
 import App from './components/app'
 
 const movie_list = document.querySelector('#movies')
-const node = document.getElementById('signed_in')
-const data = JSON.parse(node.getAttribute('data'))
+const signin_node = document.getElementById('signed_in')
+const signin_data = JSON.parse(signin_node.getAttribute('data'))
 
-ReactDOM.render(<App signed_in={data} />, movie_list)
+const pagination_node = document.getElementById('pages')
+const pagination_data = JSON.parse(pagination_node.getAttribute('data'))
+
+ReactDOM.render(<App signed_in={signin_data} totalEntries={pagination_data} />, movie_list)

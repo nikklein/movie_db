@@ -2,11 +2,15 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, except: :index
 
   def index
-    @movies = Movie.filtered(filter_params).order('id desc')
+    @movies = Movie.filtered(filter_params).order('id desc').paginate(page: params['page'], per_page: params['per_page'])
   end
 
   def create
     current_user.movies.create(movie_params)
+  end
+
+  def update
+    current_user.update(movie_params)
   end
 
   def destroy

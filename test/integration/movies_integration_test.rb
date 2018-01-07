@@ -21,6 +21,12 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'update successful' do
+    data = { title: 'any_title', text: 'any_text', mean_rating: 5, category_id: categories(:action).id }.as_json
+    post movies_url movies(:star_wars), data, xhr: true
+    assert_response :success
+  end
+
   test 'delete' do
     assert_difference('Movie.count', -1) do
       delete movie_url(movies(:star_wars)), xhr: true

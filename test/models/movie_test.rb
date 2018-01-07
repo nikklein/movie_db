@@ -6,9 +6,15 @@ class MovieTest < ActiveSupport::TestCase
     @category = categories(:action)
     @movie = movies(:star_wars)
   end
+
   test 'succesuffuly creates movie' do
     movie = @user.movies.new(title: 'any_title', category: @category)
     assert movie.save
+  end
+
+  test 'should not create movie with a blank title' do
+    movie = @user.movies.new(title: '', category: @category)
+    refute movie.save
   end
 
   test "validates user's presence" do

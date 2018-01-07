@@ -39,7 +39,7 @@ export default class Button extends React.Component{
       <div>
         <button
           style={{display: this.checkButtonStyle()}}
-          className={this.props.actionName}
+          className={this.props.className}
           onClick={this.handleClick}>{this.props.label}
         </button>
         {!this.state.isFormHidden && <MovieForm setInitialState={this.setInitialState} categories={this.props.categories} />}

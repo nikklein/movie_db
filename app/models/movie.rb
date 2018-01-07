@@ -2,6 +2,7 @@ class Movie < ApplicationRecord
   belongs_to :user
   belongs_to :category
   has_many :ratings, dependent: :destroy
+  validates :title, presence: true, uniqueness: true, allow_blank: false
 
   after_create :create_rating
 

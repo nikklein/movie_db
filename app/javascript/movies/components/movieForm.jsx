@@ -63,7 +63,7 @@ export default class MovieForm extends React.Component {
         </label><br/>
         <label>
           Text:
-          <input type="text" value={this.state.text} onChange={this.handleTextChange} />
+          <textarea type="text" value={this.state.text} onChange={this.handleTextChange} />
         </label><br/>
         <label>
           Category:

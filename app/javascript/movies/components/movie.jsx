@@ -10,9 +10,6 @@ export default class Movie extends React.Component {
     super(props)
     this.handleUpdateRating = this.handleUpdateRating.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
-    // this.state = {
-    //   isFormHidden: true
-    // }
   }
 
   static propTypes = {
@@ -70,16 +67,13 @@ export default class Movie extends React.Component {
     })
     .then((response) => {
       this.props.onInputChange()
+      this.props.update()
       // show updated
     })
     .catch((error) => {
       // implement!
     });
   }
-
-  // checkFormStyle() {
-  //     return this.state.isFormHidden ? 'none' : 'block'
-  // }
 
   render() {
     const isSignedIn = this.props.signed_in
@@ -90,10 +84,9 @@ export default class Movie extends React.Component {
         <td>{this.props.text}</td>
         <td>{this.props.category}</td>
         <td><Rating signed_in={isSignedIn} movie_id={this.props.movie_id} rating={this.props.mean_rating} handleUpdateRating={this.handleUpdateRating} /></td>
-        { isSignedIn &&
           <td>
-            {isSignedIn &&
-              <Button
+              { this.props.editable &&<Button
+                className='btn-primary'
                 label='Edit'
                 isSignedIn={isSignedIn}
                 categories={this.props.categories}
@@ -102,11 +95,9 @@ export default class Movie extends React.Component {
                 category={this.props.category}
                 rating={this.props.mean_rating}
               />}
-            <button className='delete' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>
+            { this.props.editable &&<button className='btn-primary' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>}
           </td>
-        }
       </tr>
     )
   }
 }
-

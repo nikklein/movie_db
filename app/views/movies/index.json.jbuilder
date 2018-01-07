@@ -1,6 +1,10 @@
-json.movies @movies.each do |el|
-  json.extract! el, :id, :title, :text, :mean_rating
-  json.category_name el.category.name
+json.total_entries @movies.total_entries
+
+json.movies @movies.each do |movie|
+  editable = (movie.user == current_user && user_signed_in?)
+  json.extract! movie, :id, :title, :text, :mean_rating
+  json.category_name movie.category.name
+  json.editable editable
 end
 
 json.categories Category.all.each do |category|
