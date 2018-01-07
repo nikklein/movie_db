@@ -10,7 +10,9 @@ class MoviesController < ApplicationController
   end
 
   def update
-    current_user.update(movie_params)
+    @movie = current_user.movies.find(params[:id])
+    @movie = @movie.update(movie_params)
+    @movie = current_user.movies.find(params[:id])
   end
 
   def destroy

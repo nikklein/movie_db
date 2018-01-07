@@ -12,13 +12,14 @@ export default class App extends React.Component {
     super(props)
     this.onInputChange = this.onInputChange.bind(this)
     this.findMovies = this.findMovies.bind(this)
+    this.createMovie = this.createMovie.bind(this)
     this.state = {
       movie_list: [],
       categories: [],
       ratings: [],
       page: 1,
       rows_per_page: this.props.rows,
-      totalEntries: null
+      totalEntries: 0
     }
   }
 
@@ -44,12 +45,31 @@ export default class App extends React.Component {
         per_page: this.state.rows_per_page
       },
     })
-    .then( (response) => {
-      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings, totalEntries: response.data.total_entries });
+    .then((response) => {
+      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings, totalEntries: response.data.total_entries })
     })
     .catch((error) => {
       // implement!
     })
+  }
+
+  createMovie(params) {
+    axios.post('/movies', {withCredentials: true}, {
+      data: {title: params.title, text: params.text, category_id: params.category_id, mean_rating: params.rating},
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
+        }
+    })
+    .then( (response) => {
+      this.findMovies()
+      // show updated
+    })
+    .catch((error) => {
+      // implement!
+    });
+
   }
 
   onInputChange(input_text) {
@@ -65,7 +85,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        {isSignedIn && <Button label='Add movie' isSignedIn={isSignedIn} categories={this.state.categories} />}
+        {isSignedIn && <Button label="Add movie" isSignedIn={isSignedIn} categories={this.state.categories} submitForm={this.createMovie} />}
         <div>
           <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
         </div>
@@ -73,14 +93,18 @@ export default class App extends React.Component {
           <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
         </div>
         <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
-        <div>
-          <ul className="pagination">
-           {this.initialPageNumber().map((pageNumber) =>
-              <li key={pageNumber} className="page-item"><a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a></li>
-           ) }
-          </ul>
-        </div>
-        <Movies signed_in={isSignedIn} movie_list={this.state.movie_list} categories={this.state.categories} update={this.onInputChange} />
+        { this.state.movie_list.length > 0 &&
+          <div>
+            <ul className="pagination">
+             {this.initialPageNumber().map((pageNumber) =>
+                <li key={pageNumber} className="page-item"><a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a></li>
+             ) }
+            </ul>
+          </div>
+        }
+        { this.state.movie_list.length > 0 &&
+          <Movies signed_in={isSignedIn} movie_list={this.state.movie_list} categories={this.state.categories} updateMovieList={this.findMovies} />
+        }
       </div>
     )
   }

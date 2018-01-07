@@ -11,10 +11,10 @@ export default class MovieForm extends React.Component {
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
     this.handleUpdateRating = this.handleUpdateRating.bind(this)
     this.state = {
-      title: '',
-      text: '',
-      category_id: this.props.categories[0].id,
-      rating: 0
+      title: this.props.title || '',
+      text: this.props.text || '',
+      category_id: this.props.categories[0]['id'],
+      rating: this.props.mean_rating || 0
     }
   }
 
@@ -36,22 +36,14 @@ export default class MovieForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    axios.post('/movies' + '.json', {withCredentials: true}, {
-      data: {title:this.state.title, text:this.state.text, category_id:this.state.category_id, mean_rating:this.state.rating},
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
-        }
-    })
-    .then( (response) => {
-      this.props.setInitialState()
-      // show updated
-    })
-    .catch((error) => {
-      // implement!
-    });
+    this.props.submitForm({title: this.state.title, text: this.state.text, category_id: this.state.category_id, rating: this.state.rating})
+  }
 
+  setDefaultValue() {
+    let category = this.props.categories.filter(category => category['name'] === this.props.category)
+    if (category && category.length === 1) {
+      return category[0]['id']
+    }
   }
 
   render() {
@@ -67,8 +59,8 @@ export default class MovieForm extends React.Component {
         </label><br/>
         <label>
           Category:
-          <select type="select" onChange={this.handleCategoryChange} >
-              {this.props.categories.map((el, i) => <option key={i} value={el.id}>{el.name}</option>)}
+          <select type="select" defaultValue={this.setDefaultValue()} onChange={this.handleCategoryChange} >
+              {this.props.categories.map((el, i) => <option key={i} value={el.id} >{el.name}</option>)}
           </select>
         </label><br/>
         <label>

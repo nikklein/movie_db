@@ -10,6 +10,14 @@ export default class Movie extends React.Component {
     super(props)
     this.handleUpdateRating = this.handleUpdateRating.bind(this)
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
+    this.handleUpdateRating = this.handleUpdateRating.bind(this)
+    this.editMovie = this.editMovie.bind(this)
+    this.state = {
+      title: this.props.title,
+      text: this.props.text,
+      category_id: this.props.category_id,
+      rating: this.props.mean_rating
+    }
   }
 
   static propTypes = {
@@ -21,39 +29,7 @@ export default class Movie extends React.Component {
   }
 
   handleDeleteClick(e) {
-    axios.delete('/movies/' + e.target.id, {
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
-        }
-    },
-    {withCredentials: true})
-    .then( (response) => {
-      this.props.onInputChange
-      // show updated
-    })
-    .catch((error) => {
-      // implement!
-    });
-  }
-
-  handleEditClick(e) {
-    axios.put('/movies/' + e.target.id, {
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
-        }
-    },
-    {withCredentials: true})
-    .then( (response) => {
-      this.props.onInputChange
-      // show updated
-    })
-    .catch((error) => {
-      // implement!
-    });
+    this.props.deleteMovie(e.target.id)
   }
 
   handleUpdateRating(rating) {
@@ -66,7 +42,7 @@ export default class Movie extends React.Component {
         }
     })
     .then((response) => {
-      this.props.onInputChange()
+      // this.props.onInputChange()
       this.props.update()
       // show updated
     })
@@ -75,17 +51,42 @@ export default class Movie extends React.Component {
     });
   }
 
+  editMovie(params) {
+    axios.put('/movies/' + this.props.movie_id, {withCredentials: true}, {
+      params: {title:params.title, text:params.text, category_id:params.category_id, mean_rating:params.rating},
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
+        }
+    })
+    .then((response) => {
+      this.setState({
+          title: response.data.title,
+          text: response.data.text,
+          category_id: response.data.category_id,
+          rating: response.data.mean_rating
+      })
+      // show updated
+    })
+    .catch((error) => {
+      // implement!
+    })
+  }
+
   render() {
     const isSignedIn = this.props.signed_in
 
     return (
       <tr>
-        <td>{this.props.title}</td>
-        <td>{this.props.text}</td>
+        <td>{this.state.title}</td>
+        <td>{this.state.text}</td>
         <td>{this.props.category}</td>
-        <td><Rating signed_in={isSignedIn} movie_id={this.props.movie_id} rating={this.props.mean_rating} handleUpdateRating={this.handleUpdateRating} /></td>
+        <td><Rating signed_in={isSignedIn} movie_id={this.props.movie_id} rating={this.state.rating} handleUpdateRating={this.handleUpdateRating} /></td>
+        {isSignedIn &&
           <td>
-              { this.props.editable &&<Button
+            {this.props.editable &&
+              <Button
                 className='btn-primary'
                 label='Edit'
                 isSignedIn={isSignedIn}
@@ -93,10 +94,13 @@ export default class Movie extends React.Component {
                 title={this.props.title}
                 text={this.props.text}
                 category={this.props.category}
-                rating={this.props.mean_rating}
-              />}
-            { this.props.editable &&<button className='btn-primary' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>}
+                mean_rating={this.props.mean_rating}
+                submitForm={this.editMovie}
+              />
+            }
+            {this.props.editable && <button className='btn-primary' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>}
           </td>
+          }
       </tr>
     )
   }
