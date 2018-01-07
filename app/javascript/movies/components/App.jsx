@@ -17,7 +17,7 @@ export default class App extends React.Component {
       categories: [],
       ratings: [],
       page: 1,
-      rows_per_page: 10,
+      rows_per_page: this.props.rows,
     }
   }
 
@@ -63,10 +63,14 @@ export default class App extends React.Component {
     const isSignedIn = this.props.signed_in
 
     return (
-      <div >
+      <div>
         {isSignedIn && <Button label='Add movie' isSignedIn={isSignedIn} categories={this.state.categories} />}
-        <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
-        <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
+        <div>
+          <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
+        </div>
+        <div>
+          <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
+        </div>
         <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
         <div>
           <ul className="pagination">
