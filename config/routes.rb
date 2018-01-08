@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :movies
+  resources :movies, exclude: :show
 
-  resources :ratings
+  resources :ratings, only: :create
 end
