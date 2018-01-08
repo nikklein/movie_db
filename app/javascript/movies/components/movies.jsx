@@ -47,24 +47,22 @@ export default class Movies extends React.Component {
     })
 
     return (
-      <div className='col-sm-12'>
-        <table className='table table-condensed table-bordered table-hover'>
-          <thead>
-            <tr>
-              <td>Title</td>
-              <td>Text</td>
-              <td>Category</td>
-              <td>Rating</td>
-              {this.props.signed_in &&
-                <td>Actions</td>
-              }
-            </tr>
-          </thead>
-            <tbody>
-              {rows}
-            </tbody>
-        </table>
-      </div>
+      <table className='table table-condensed table-borderless table-hover'>
+        <thead>
+          <tr>
+            <td>Title</td>
+            <td>Text</td>
+            <td>Category</td>
+            <td>Rating</td>
+            {this.props.signed_in &&
+              <td>Actions</td>
+            }
+          </tr>
+        </thead>
+          <tbody>
+            {rows}
+          </tbody>
+      </table>
     )
   }
 }

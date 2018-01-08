@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 
-const movie_list = document.querySelector('#movies')
+const movie_list = document.getElementById('movies')
 const signin_node = document.getElementById('signed_in')
 const signin_data = JSON.parse(signin_node.getAttribute('data'))
 

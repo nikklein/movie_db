@@ -6,13 +6,20 @@ class MoviesController < ApplicationController
   end
 
   def create
-    current_user.movies.create(movie_params)
+    if current_user.movies.create(movie_params)
+      render json: { status: 200 }
+    else
+      render json: { status: 422 }
+    end
   end
 
   def update
     @movie = current_user.movies.find(params[:id])
-    @movie = @movie.update(movie_params)
-    @movie = current_user.movies.find(params[:id])
+    if @movie.update(movie_params)
+      render json: { status: 200 }
+    else
+      render json: { status: 422 }
+    end
   end
 
   def destroy

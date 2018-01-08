@@ -4,6 +4,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 require 'capybara/minitest'
+require 'simplecov'
+
+SimpleCov.start
 
 class ActiveSupport::TestCase
   fixtures :all

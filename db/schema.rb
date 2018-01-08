@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20171231152918) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["text"], name: "index_movies_on_text"
+    t.index ["title"], name: "index_movies_on_title"
   end
 
   create_table "ratings", force: :cascade do |t|

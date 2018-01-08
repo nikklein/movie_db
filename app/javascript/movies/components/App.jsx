@@ -85,27 +85,40 @@ export default class App extends React.Component {
 
     return (
       <div>
-        {isSignedIn && <Button label="Add movie" isSignedIn={isSignedIn} categories={this.state.categories} submitForm={this.createMovie} />}
-        <div>
-          <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
-        </div>
-        <div>
-          <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
-        </div>
-        <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
-        { this.state.movie_list.length > 0 &&
-          <div>
-            <ul className="pagination">
-             {this.initialPageNumber().map((pageNumber) =>
-                <li key={pageNumber} className="page-item"><a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a></li>
-             ) }
-            </ul>
+        <h2 style={{textAlign: 'center'}}>Movie DB</h2><hr/>
+        <div className="row">
+          <div className="col-sm-4 pull-left">
+            {isSignedIn && <Button className="btn-primary" label="Add movie" isSignedIn={isSignedIn} categories={this.state.categories} submitForm={this.createMovie} />}
           </div>
-        }
-        { this.state.movie_list.length > 0 &&
-          <Movies signed_in={isSignedIn} movie_list={this.state.movie_list} categories={this.state.categories} updateMovieList={this.findMovies} />
-        }
+          <div className="col-sm-4">
+            <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
+          </div>
+          <div className="col-sm-4">
+            <RatingFilters ratings={this.state.ratings} onInputChange={this.onInputChange} />
+          </div>
+        </div><hr/>
+          <div className="row">
+            <div className="col-sm-10">
+              <Search filteredText={this.state.filteredText} onInputChange={this.onInputChange} />
+            </div>
+          </div>
+          <div className="row">
+            { this.state.movie_list.length > 0 &&
+              <div className="col-sm-4">
+              <ul className="pagination">
+               {this.initialPageNumber().map((pageNumber) =>
+                  <li key={pageNumber} className="page-item"><a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a></li>
+               ) }
+              </ul>
+              </div>
+            }
+            { this.state.movie_list.length > 0 &&
+              <div className="col-sm-12">
+                <Movies signed_in={isSignedIn} movie_list={this.state.movie_list} categories={this.state.categories} updateMovieList={this.findMovies} />
+              </div>
+            }
+          </div>
       </div>
-    )
+      )
   }
 }

@@ -43,22 +43,26 @@ export default class Button extends React.Component{
 
   render () {
     return (
-      <div>
-        <button
-          type="button"
-          className={this.props.className}
-          onClick={this.handleClick}>{this.toggleButton()}
-        </button>
-        {!this.state.isFormHidden &&
-          <MovieForm
-          setInitialState={this.setInitialState}
-          categories={this.props.categories}
-          title={this.props.title}
-          text={this.props.text}
-          category={this.props.category}
-          mean_rating={this.props.mean_rating}
-          submitForm={this.submitForm}
-        />}
+      <div className="row">
+        <div className="col-sm-4">
+          <button
+            type="button"
+            className={this.props.className}
+            onClick={this.handleClick}>{this.toggleButton()}
+          </button>
+        </div>
+        <div className="col-sm-6">
+          {!this.state.isFormHidden &&
+            <MovieForm
+            setInitialState={this.setInitialState}
+            categories={this.props.categories}
+            title={this.props.title}
+            text={this.props.text}
+            category={this.props.category}
+            mean_rating={this.props.mean_rating}
+            submitForm={this.submitForm}
+          />}
+        </div>
       </div>
     )
   }

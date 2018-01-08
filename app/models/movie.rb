@@ -1,4 +1,8 @@
 class Movie < ApplicationRecord
+  include PgSearch
+
+  pg_search_scope :search_for, against: [:title, :text]
+
   belongs_to :user
   belongs_to :category
   has_many :ratings, dependent: :destroy
@@ -9,7 +13,7 @@ class Movie < ApplicationRecord
   def self.filtered(params)
     result = Movie.all
 
-    return result.where(title: params['filtered_text']) if params['filtered_text'].present?
+    return Movie.search_for(params['filtered_text']) if params['filtered_text'].present?
 
     return result.joins(:category).where('categories.name = ?', params['categoryFilter']) if params['categoryFilter'].present?
 

@@ -13,9 +13,8 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div>
-        <label>Search</label>
-        <input type="text" onKeyUp={this.handleChange}/>
+      <div className="input-group-addon">
+        <input type="text" className="form-control" placeholder="Search movie" onKeyUp={this.handleChange}/>
       </div>
     )
   }

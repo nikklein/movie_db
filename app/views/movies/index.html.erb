@@ -1,15 +1,25 @@
-<h1>MOVIES</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= content_tag :div,
+     id: "signed_in",
+     data: user_signed_in? do %>
+    <% end %>
 
-<div id="movies"></div>
+    <%= content_tag :div,
+     id: "pages",
+     data: @movies.total_entries do %>
+    <% end %>
 
-<%= content_tag :div,
- id: "signed_in",
- data: user_signed_in? do %>
-<% end %>
+  </head>
 
-<%= content_tag :div,
- id: "pages",
- data: @movies.total_entries do %>
-<% end %>
+  <body>
+    <div id="movies"></div>
+    <%= javascript_pack_tag 'movies' %>
+  </body>
+</html>
 
-<%= javascript_pack_tag 'movies' %>
+
+
+
+

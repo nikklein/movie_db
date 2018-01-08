@@ -22,9 +22,14 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'update successful' do
-    data = { title: 'any_title', text: 'any_text', mean_rating: 5, category_id: categories(:action).id }.as_json
-    post movies_url movies(:star_wars), data, xhr: true
+    movie = movies(:star_wars)
+    data = { title: 'any_title2', text: 'any_text', mean_rating: 3, category_id: categories(:action).id }
+    put movie_url movie, data.as_json
     assert_response :success
+    movie.reload
+    data.each do |key, value|
+      assert_equal value, movie.send(key.to_sym)
+    end
   end
 
   test 'delete' do

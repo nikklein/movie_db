@@ -16,6 +16,7 @@ export default class Movie extends React.Component {
       title: this.props.title,
       text: this.props.text,
       category_id: this.props.category_id,
+      category: this.props.category,
       rating: this.props.mean_rating
     }
   }
@@ -34,26 +35,7 @@ export default class Movie extends React.Component {
 
   handleUpdateRating(rating) {
     axios.post('/ratings' + '.json', {withCredentials: true}, {
-      data: {movie_id:this.props.movie_id, rating:rating},
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
-        }
-    })
-    .then((response) => {
-      // this.props.onInputChange()
-      this.props.update()
-      // show updated
-    })
-    .catch((error) => {
-      // implement!
-    });
-  }
-
-  editMovie(params) {
-    axios.put('/movies/' + this.props.movie_id, {withCredentials: true}, {
-      params: {title:params.title, text:params.text, category_id:params.category_id, mean_rating:params.rating},
+      data: {movie_id: this.props.movie_id, rating: rating},
       headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -62,12 +44,33 @@ export default class Movie extends React.Component {
     })
     .then((response) => {
       this.setState({
-          title: response.data.title,
-          text: response.data.text,
-          category_id: response.data.category_id,
-          rating: response.data.mean_rating
+        rating: rating
       })
-      // show updated
+    })
+    .catch((error) => {
+      // implement!
+    });
+  }
+
+  editMovie(params) {
+    axios.put('/movies/' + this.props.movie_id, {withCredentials: true}, {
+      params: {title: params.title, text: params.text, category_id: params.category_id, mean_rating: params.rating},
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content,
+        }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        this.setState({
+          title: params.title,
+          text: params.text,
+          category_id: params.category_id,
+          rating: params.rating,
+          category: params.category
+        })
+      }
     })
     .catch((error) => {
       // implement!
@@ -76,12 +79,11 @@ export default class Movie extends React.Component {
 
   render() {
     const isSignedIn = this.props.signed_in
-
     return (
       <tr>
         <td>{this.state.title}</td>
         <td>{this.state.text}</td>
-        <td>{this.props.category}</td>
+        <td>{this.state.category}</td>
         <td><Rating signed_in={isSignedIn} movie_id={this.props.movie_id} rating={this.state.rating} handleUpdateRating={this.handleUpdateRating} /></td>
         {isSignedIn &&
           <td>
@@ -91,10 +93,10 @@ export default class Movie extends React.Component {
                 label='Edit'
                 isSignedIn={isSignedIn}
                 categories={this.props.categories}
-                title={this.props.title}
-                text={this.props.text}
-                category={this.props.category}
-                mean_rating={this.props.mean_rating}
+                title={this.state.title}
+                text={this.state.text}
+                category={this.state.category}
+                mean_rating={this.state.rating}
                 submitForm={this.editMovie}
               />
             }

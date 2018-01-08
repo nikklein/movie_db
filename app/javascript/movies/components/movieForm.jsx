@@ -14,6 +14,7 @@ export default class MovieForm extends React.Component {
       title: this.props.title || '',
       text: this.props.text || '',
       category_id: this.props.categories[0]['id'],
+      category: this.props.categories[0]['name'],
       rating: this.props.mean_rating || 0
     }
   }
@@ -27,7 +28,7 @@ export default class MovieForm extends React.Component {
   }
 
   handleCategoryChange(event) {
-    this.setState({category_id: event.target.value})
+    this.setState({category_id: event.target.value, category: event.target.options[event.target.selectedIndex].text})
   }
 
   handleUpdateRating(rating) {
@@ -36,7 +37,7 @@ export default class MovieForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.submitForm({title: this.state.title, text: this.state.text, category_id: this.state.category_id, rating: this.state.rating})
+    this.props.submitForm({title: this.state.title, text: this.state.text, category_id: this.state.category_id, category: this.state.category, rating: this.state.rating})
   }
 
   setDefaultValue() {
@@ -60,7 +61,7 @@ export default class MovieForm extends React.Component {
         <label>
           Category:
           <select type="select" defaultValue={this.setDefaultValue()} onChange={this.handleCategoryChange} >
-              {this.props.categories.map((el, i) => <option key={i} value={el.id} >{el.name}</option>)}
+              {this.props.categories.map((el, i) => <option key={i} value={el.id}>{el.name}</option>)}
           </select>
         </label><br/>
         <label>
