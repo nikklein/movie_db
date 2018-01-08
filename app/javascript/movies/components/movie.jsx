@@ -84,7 +84,13 @@ export default class Movie extends React.Component {
         <td>{this.state.title}</td>
         <td>{this.state.text}</td>
         <td>{this.state.category}</td>
-        <td><Rating signed_in={isSignedIn} movie_id={this.props.movie_id} rating={this.state.rating} handleUpdateRating={this.handleUpdateRating} /></td>
+        <td><Rating
+              signed_in={isSignedIn}
+              movie_id={this.props.movie_id}
+              rating={this.state.rating}
+              handleUpdateRating={this.handleUpdateRating}
+            />
+        </td>
         {isSignedIn &&
           <td>
             {this.props.editable &&
@@ -100,7 +106,9 @@ export default class Movie extends React.Component {
                 submitForm={this.editMovie}
               />
             }
-            {this.props.editable && <button className='btn-primary' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>}
+            {this.props.editable &&
+              <button className='btn-primary' id={this.props.movie_id} onClick={this.handleDeleteClick}>Delete</button>
+            }
           </td>
           }
       </tr>

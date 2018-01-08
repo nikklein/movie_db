@@ -46,7 +46,12 @@ export default class App extends React.Component {
       },
     })
     .then((response) => {
-      this.setState({movie_list: response.data.movies, categories: response.data.categories, ratings: response.data.ratings, totalEntries: response.data.total_entries })
+      this.setState({
+        movie_list: response.data.movies,
+        categories: response.data.categories,
+        ratings: response.data.ratings,
+        totalEntries: response.data.total_entries
+      })
     })
     .catch((error) => {
       // implement!
@@ -88,7 +93,15 @@ export default class App extends React.Component {
         <h2 style={{textAlign: 'center'}}>Movie DB</h2><hr/>
         <div className="row">
           <div className="col-sm-4 pull-left">
-            {isSignedIn && <Button className="btn-primary" label="Add movie" isSignedIn={isSignedIn} categories={this.state.categories} submitForm={this.createMovie} />}
+            {isSignedIn &&
+              <Button
+                className="btn-primary"
+                label="Add movie"
+                isSignedIn={isSignedIn}
+                categories={this.state.categories}
+                submitForm={this.createMovie}
+              />
+            }
           </div>
           <div className="col-sm-4">
             <CategoryFilters categories={this.state.categories} onInputChange={this.onInputChange} />
@@ -107,14 +120,21 @@ export default class App extends React.Component {
               <div className="col-sm-4">
               <ul className="pagination">
                {this.initialPageNumber().map((pageNumber) =>
-                  <li key={pageNumber} className="page-item"><a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a></li>
-               ) }
+                  <li key={pageNumber} className="page-item">
+                    <a href={"##"+pageNumber} className="page-link" onClick={() => this.findMovies({page: pageNumber})}>{pageNumber}</a>
+                  </li>
+                )}
               </ul>
               </div>
             }
             { this.state.movie_list.length > 0 &&
               <div className="col-sm-12">
-                <Movies signed_in={isSignedIn} movie_list={this.state.movie_list} categories={this.state.categories} updateMovieList={this.findMovies} />
+                <Movies
+                  signed_in={isSignedIn}
+                  movie_list={this.state.movie_list}
+                  categories={this.state.categories}
+                  updateMovieList={this.findMovies}
+                />
               </div>
             }
           </div>

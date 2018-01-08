@@ -37,7 +37,13 @@ export default class MovieForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.submitForm({title: this.state.title, text: this.state.text, category_id: this.state.category_id, category: this.state.category, rating: this.state.rating})
+    this.props.submitForm({
+      title: this.state.title,
+      text: this.state.text,
+      category_id: this.state.category_id,
+      category: this.state.category,
+      rating: this.state.rating
+    })
   }
 
   setDefaultValue() {
@@ -66,7 +72,12 @@ export default class MovieForm extends React.Component {
         </label><br/>
         <label>
           Rating:
-          <Rating signed_in={true} movie_id={this.props.movie_id} rating={this.state.rating} handleUpdateRating={this.handleUpdateRating} />
+          <Rating
+            signed_in={true}
+            movie_id={this.props.movie_id}
+            rating={this.state.rating}
+            handleUpdateRating={this.handleUpdateRating}
+          />
         </label><br/>
         <input type="submit" value="Submit" />
       </form>
